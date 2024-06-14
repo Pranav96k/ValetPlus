@@ -1,9 +1,10 @@
 import React from 'react'
+import CustomerOnboarding from './Components/CustomerOnboarding'
 
 const app = () => {
   return (
     <div>
-      <h1>Hello World</h1>
+      <CustomerOnboarding/>
     </div>
   )
 }
