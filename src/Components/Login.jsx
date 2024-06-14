@@ -65,6 +65,7 @@ const Login = () => {
         alert('OTP submitted successfully!');
         setErrorMessage('');
         setSuccessMessage('');
+        setTimeLeft(0); // Stop the timer
       } else {
         throw new Error(response.data.message || 'Invalid OTP. Please try again.');
       }
@@ -73,6 +74,15 @@ const Login = () => {
       setSuccessMessage('');
       console.error('Error validating OTP:', error.response ? error.response.data : error.message);
     }
+  };
+
+  // Function to handle Resend OTP button click
+  const handleResendOtp = async () => {
+    // Reset OTP fields
+    setOtp('');
+    setTimeLeft(120); // Reset timer to 120 seconds
+    // Call handleSendOtp function to resend OTP
+    await handleSendOtp();
   };
 
   return (
@@ -111,17 +121,23 @@ const Login = () => {
                 onChange={(e) => setOtp(e.target.value)}
                 placeholder="Enter OTP"
               />
-              <div className="flex items-center justify-between mt-2">
-                <span className="text-sm text-gray-500">
-                  {timeLeft > 0 ? `OTP expires in ${timeLeft} seconds` : 'OTP expired'}
-                </span>
-                <button
-                  onClick={handleSubmitOtp}
-                  className="bg-dark-blue text-white font-bold py-2 px-4 rounded-full hover:bg-blue-700"
-                  disabled={timeLeft <= 0}
-                >
-                  Submit
-                </button>
+              <div className="flex flex-col items-center mt-2">
+                <div className="flex justify-between w-full">
+                  <span className="text-sm text-gray-500">
+                    {timeLeft > 0 ? `OTP expires in ${timeLeft} seconds` : 'OTP expired'}
+                  </span>
+                  {timeLeft <= 0 && (
+                    <button onClick={handleResendOtp} className='text-sm text-red-500'>Resend OTP</button>
+                  )}
+                </div>
+                {timeLeft > 0 && (
+                  <button
+                    onClick={handleSubmitOtp}
+                    className="mt-4 w-full bg-dark-blue text-white font-bold py-2 px-4 rounded-full hover:bg-blue-700"
+                  >
+                    Submit
+                  </button>
+                )}
               </div>
             </div>
           )}
