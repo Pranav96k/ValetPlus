@@ -4,6 +4,7 @@ import { DropCsv } from "../assets";
 import csvFileToArray from "../utils/csvFileToArray";
 
 import { useDropzone } from "react-dropzone";
+import { Link } from "react-router-dom";
 
 const CustomerOnboarding = () => {
   const [files, setFiles] = useState();
@@ -147,9 +148,11 @@ const CustomerOnboarding = () => {
         <hr className="max-w-4xl mx-auto mt-7 border-black" />
         <p className="font-bold flex justify-center m-4">or</p>
 
-        <button className="bg-[#0C79B6] md:w-[600px]  mx-auto flex justify-center p-2  text-white font-bold text-xl rounded-md">
-          Add data manually
-        </button>
+        <Link to="/customerinformationformpage1">
+          <button className="bg-[#0C79B6] md:w-[600px]  mx-auto flex justify-center p-2  text-white font-bold text-xl rounded-md">
+            Add data manually
+          </button>
+        </Link>
       </div>
     </div>
   );
